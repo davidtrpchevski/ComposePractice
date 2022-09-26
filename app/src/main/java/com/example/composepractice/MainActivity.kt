@@ -10,6 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.composepractice.ui.layouts.unit1.SimpleLayoutTryout
 import com.example.composepractice.ui.layouts.unit1.TaskCompletedLayout
+import com.example.composepractice.ui.layouts.unit2.DiceRollerApp
+import com.example.composepractice.ui.layouts.unit2.LemonadeApp
+import com.example.composepractice.ui.layouts.unit2.LemonadeCodeLabApp
+import com.example.composepractice.ui.layouts.unit3.TipTimeCalculatorApp
 import com.example.composepractice.ui.theme.ComposePracticeTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,7 +21,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposePracticeTheme {
-                TaskCompletedLayout()
+                TipTimeCalculatorApp()
             }
         }
     }
