@@ -28,8 +28,8 @@ import java.text.NumberFormat
 
 @Preview(showBackground = true)
 @Composable
-fun TipTimeCalculatorApp() {
-    TipTimeCalculator(
+fun TipTimeCalculatorCustomTipApp() {
+    TipTimeCalculatorCustomTip(
         modifier = Modifier
             .fillMaxSize()
             .wrapContentWidth(Alignment.CenterHorizontally)
@@ -38,7 +38,7 @@ fun TipTimeCalculatorApp() {
 }
 
 @Composable
-fun TipTimeCalculator(modifier: Modifier = Modifier) {
+fun TipTimeCalculatorCustomTip(modifier: Modifier = Modifier) {
 
     var amountInput by remember { mutableStateOf("") }
     val tipReturn = calculateTip(amountInput.toDoubleOrNull() ?: 0.0)
@@ -51,7 +51,7 @@ fun TipTimeCalculator(modifier: Modifier = Modifier) {
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
         Spacer(modifier = Modifier.height(16.dp))
-        EditNumberField(amountInput) {
+        EditNumberFieldCustomTip(amountInput) {
             amountInput = it
         }
         Spacer(modifier = Modifier.height(24.dp))
@@ -65,7 +65,12 @@ fun TipTimeCalculator(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun EditNumberField(amountInput: String, doOnTextChange: (String) -> Unit) {
+fun CustomTipField(customTip: String, doOnTipChange: (String) -> Unit) {
+    TextField(value = customTip, onValueChange = doOnTipChange)
+}
+
+@Composable
+fun EditNumberFieldCustomTip(amountInput: String, doOnTextChange: (String) -> Unit) {
     TextField(
         value = amountInput,
         onValueChange = doOnTextChange,
