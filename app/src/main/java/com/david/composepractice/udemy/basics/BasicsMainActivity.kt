@@ -14,7 +14,7 @@ class BasicsMainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposePracticeTheme {
-                ProfilePage()
+                ProfilePageConstraintLandscapeAndPortrait()
             }
         }
     }
