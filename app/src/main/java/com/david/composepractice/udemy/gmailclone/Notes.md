@@ -1,0 +1,1 @@
+Scaffold is a layout that provides a lot of material design elements like the AppBar for instance.
