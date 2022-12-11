@@ -1,4 +1,4 @@
-package com.example.composepractice.ui.layouts.unit3
+package com.david.composepractice.ui.layouts.unit3
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,7 +23,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.composepractice.R
+import com.david.composepractice.R
 import java.text.NumberFormat
 
 @Preview(showBackground = true)

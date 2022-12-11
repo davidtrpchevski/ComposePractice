@@ -1,4 +1,4 @@
-package com.example.composepractice.ui.layouts.unit2
+package com.david.composepractice.ui.layouts.unit2
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

@@ -1,4 +1,4 @@
-package com.example.composepractice.tryouts
+package com.david.composepractice.tryouts
 
 import android.util.Log
 import kotlin.properties.ReadWriteProperty
@@ -41,11 +41,6 @@ class Kid : Human() {
         // Override only in subclass
         mother = "Mojo"
         Log.d("KID", "LAUGH")
-    }
-
-    override fun love() {
-        // Called the love method from inherited via super
-        super.love()
     }
 
     fun smile() {

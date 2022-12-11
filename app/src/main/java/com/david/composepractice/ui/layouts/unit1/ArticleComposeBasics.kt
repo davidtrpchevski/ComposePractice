@@ -1,4 +1,4 @@
-package com.example.composepractice.ui.layouts.unit1
+package com.david.composepractice.ui.layouts.unit1
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -13,7 +13,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.composepractice.R
+import com.david.composepractice.R
 
 @Composable
 @Preview(showBackground = true)

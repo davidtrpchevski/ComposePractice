@@ -1,4 +1,4 @@
-package com.example.composepractice
+package com.david.composepractice
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

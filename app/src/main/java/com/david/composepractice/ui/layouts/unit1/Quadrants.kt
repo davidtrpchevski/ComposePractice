@@ -1,4 +1,4 @@
-package com.example.composepractice.ui.layouts.unit1
+package com.david.composepractice.ui.layouts.unit1
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
