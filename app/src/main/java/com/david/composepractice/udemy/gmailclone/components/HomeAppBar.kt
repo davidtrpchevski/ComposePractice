@@ -12,6 +12,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -31,9 +33,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.david.composepractice.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
-fun HomeAppBar() {
+fun HomeAppBar(scaffoldState: ScaffoldState, coroutineScope: CoroutineScope) {
     var searchField by remember {
         mutableStateOf("")
     }
@@ -44,7 +48,13 @@ fun HomeAppBar() {
                 .fillMaxWidth()
                 .height(50.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(6.dp)) {
-                Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
+                IconButton(onClick = {
+                    coroutineScope.launch {
+                        scaffoldState.drawerState.open()
+                    }
+                }) {
+                    Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
+                }
                 TextField(value = searchField,
                     onValueChange = {
                         searchField = it
@@ -75,5 +85,5 @@ fun HomeAppBar() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewHomeAppBar() {
-    HomeAppBar()
+//    HomeAppBar()
 }
