@@ -29,3 +29,9 @@ We use decouple API to separate constraints for portrait or landscape like in po
 function by returning a ConstraintSet. We need to have the ConstraintLayout inside a
 BoxWithConstraints()
 
+4. TextFieldState
+
+We use remember to change the value at runtime and reflect the changes instantly (known as
+recomposition), basically, composables rerun to update the composition (change the UI) whenever the
+state of the data is changed. But this doesn't survive configuration changes, instead we have to use
+rememeberSaveable().
