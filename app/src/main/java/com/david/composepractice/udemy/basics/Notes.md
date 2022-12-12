@@ -35,3 +35,14 @@ We use remember to change the value at runtime and reflect the changes instantly
 recomposition), basically, composables rerun to update the composition (change the UI) whenever the
 state of the data is changed. But this doesn't survive configuration changes, instead we have to use
 rememeberSaveable().
+
+5. Kotlin
+
+We can use the measureTime() to measure how much time a given piece of code runs for AND get its
+result. Example:
+
+```
+val (result, timeTaken) = measureTimedValue {
+body()
+}
+```
