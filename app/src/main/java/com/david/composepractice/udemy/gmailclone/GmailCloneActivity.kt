@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.david.composepractice.udemy.gmailclone.components.GmailDrawerMenu
 import com.david.composepractice.udemy.gmailclone.components.HomeAppBar
 import com.david.composepractice.udemy.gmailclone.components.HomeBottomBar
+import com.david.composepractice.udemy.gmailclone.components.MailList
 import com.david.composepractice.ui.theme.ComposePracticeTheme
 
 class GmailCloneActivity : ComponentActivity() {
@@ -35,7 +36,7 @@ fun GmailClone() {
         topBar = { HomeAppBar(drawerScaffoldState, drawerCoroutineScope) },
         drawerContent = { GmailDrawerMenu(drawerScrollState) },
         bottomBar = { HomeBottomBar() }) {
-        it
+        MailList(it)
     }
 }
 
