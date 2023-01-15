@@ -7,6 +7,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.tooling.preview.Preview
 import com.david.composepractice.udemy.gmailclone.components.GmailDrawerMenu
@@ -33,9 +35,12 @@ fun GmailClone() {
     val drawerCoroutineScope = rememberCoroutineScope()
     val drawerScrollState = rememberScrollState()
     val mailListScrollState = rememberScrollState()
+    val dialogOpenState = remember {
+        mutableStateOf(false)
+    }
 
     Scaffold(scaffoldState = drawerScaffoldState,
-        topBar = { HomeAppBar(drawerScaffoldState, drawerCoroutineScope) },
+        topBar = { HomeAppBar(drawerScaffoldState, drawerCoroutineScope, dialogOpenState) },
         drawerContent = { GmailDrawerMenu(drawerScrollState) },
         floatingActionButton = { GmailFab(scrollState = (mailListScrollState)) },
         bottomBar = { HomeBottomBar() }) {

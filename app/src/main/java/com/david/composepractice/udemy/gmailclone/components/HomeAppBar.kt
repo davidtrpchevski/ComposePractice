@@ -2,6 +2,7 @@ package com.david.composepractice.udemy.gmailclone.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,6 +21,7 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,16 +39,22 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeAppBar(scaffoldState: ScaffoldState, coroutineScope: CoroutineScope) {
+fun HomeAppBar(
+    scaffoldState: ScaffoldState,
+    coroutineScope: CoroutineScope,
+    dialogOpenState: MutableState<Boolean>
+) {
     var searchField by remember {
         mutableStateOf("")
     }
     Box(Modifier.padding(16.dp)) {
-        Card(elevation = 6.dp,
+        Card(
+            elevation = 6.dp,
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp)) {
+                .height(50.dp)
+        ) {
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(6.dp)) {
                 IconButton(onClick = {
                     coroutineScope.launch {
@@ -69,14 +77,21 @@ fun HomeAppBar(scaffoldState: ScaffoldState, coroutineScope: CoroutineScope) {
                         unfocusedIndicatorColor = Color.Transparent,
                     ),
                     singleLine = true,
-                    modifier = Modifier.weight(1F))
+                    modifier = Modifier.weight(1F)
+                )
                 Image(painter = painterResource(id = R.drawable.ic_launcher_foreground),
                     contentDescription = "Profile",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .size(30.dp)
                         .clip(CircleShape)
-                        .background(Color.Green))
+                        .background(Color.Green)
+                        .clickable {
+                            dialogOpenState.value = true
+                        })
+                if (dialogOpenState.value) {
+                    GmailDialog(dialogOpenState = dialogOpenState)
+                }
             }
         }
     }
