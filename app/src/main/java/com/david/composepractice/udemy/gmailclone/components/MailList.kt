@@ -1,7 +1,10 @@
 package com.david.composepractice.udemy.gmailclone.components
 
 import android.util.Log
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -31,9 +34,13 @@ import com.david.composepractice.udemy.gmailclone.mockMailList
 import com.david.composepractice.udemy.gmailclone.model.MailItemModel
 
 @Composable
-fun MailList(paddingValues: PaddingValues) {
+fun MailList(paddingValues: PaddingValues, scrollState: ScrollState) {
     Box(modifier = Modifier.padding(paddingValues)) {
-        LazyColumn(modifier = Modifier.padding(8.dp)) {
+        LazyColumn(
+            modifier = Modifier
+                .padding(8.dp)
+                .scrollable(scrollState, Orientation.Vertical)
+        ) {
             items(mockMailList) { item: MailItemModel ->
                 MailItem(mailItemModel = item)
             }
