@@ -19,6 +19,7 @@ class NewsManager {
         }
 
     val selectedCategory = mutableStateOf<CategoryTabArticleModel?>(null)
+    val selectedSource = mutableStateOf<Pair<String, String>?>(null)
 
     init {
         getArticles(country = "us")
