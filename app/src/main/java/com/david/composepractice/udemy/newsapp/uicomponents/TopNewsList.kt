@@ -1,6 +1,5 @@
 package com.david.composepractice.udemy.newsapp.uicomponents
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,39 +17,44 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.david.composepractice.R
-import com.david.composepractice.udemy.newsapp.MockData
-import com.david.composepractice.udemy.newsapp.model.NewsDataModel
+import com.david.composepractice.udemy.newsapp.model.TopNewsArticleModel
 
 @Composable
-fun TopNewsList(onItemClicked: (NewsDataModel) -> Unit) {
+fun TopNewsList(
+    topNewsArticles: List<TopNewsArticleModel?>?,
+    onItemClicked: (TopNewsArticleModel) -> Unit,
+) {
     LazyColumn {
-        items(MockData.topNewsList) { item: NewsDataModel ->
-            TopNewsItem(newsDataModel = item, onItemClicked = onItemClicked)
+        topNewsArticles?.let { articleList ->
+            items(articleList) { item: TopNewsArticleModel? ->
+                item?.let {
+                    TopNewsItem(newsDataModel = it, onItemClicked = onItemClicked)
+                }
+            }
         }
+
     }
 }
 
 @Composable
 fun TopNewsItem(
-    newsDataModel: NewsDataModel,
+    newsDataModel: TopNewsArticleModel,
     modifier: Modifier = Modifier,
-    onItemClicked: (NewsDataModel) -> Unit
+    onItemClicked: (TopNewsArticleModel) -> Unit
 ) {
-    Box(
-        modifier = modifier
-            .height(200.dp)
-            .fillMaxWidth()
-            .padding(8.dp)
-            .clickable { onItemClicked(newsDataModel) }
-    ) {
-        Image(
-            painter = painterResource(id = newsDataModel.image),
+    Box(modifier = modifier
+        .height(200.dp)
+        .fillMaxWidth()
+        .padding(8.dp)
+        .clickable { onItemClicked(newsDataModel) }) {
+        AsyncImage(
+            model = newsDataModel.urlToImage,
             contentDescription = newsDataModel.title,
             contentScale = ContentScale.Crop,
             modifier = modifier
@@ -59,28 +63,27 @@ fun TopNewsItem(
         )
         Column(modifier = modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceBetween) {
             Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = modifier.fillMaxWidth()
+                horizontalArrangement = Arrangement.SpaceBetween, modifier = modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = newsDataModel.publishedAt,
+                    text = newsDataModel.publishedAt ?: stringResource(R.string.item_not_available),
                     color = Color.White,
                     modifier = modifier.padding(start = 8.dp, top = 8.dp)
                 )
                 Text(
-                    text = newsDataModel.author,
+                    text = newsDataModel.author ?: stringResource(R.string.item_not_available),
                     color = Color.White,
                     modifier = modifier.padding(end = 8.dp, top = 8.dp)
                 )
             }
             Column(modifier = modifier.fillMaxWidth()) {
                 Text(
-                    text = newsDataModel.title,
+                    text = newsDataModel.title ?: stringResource(R.string.item_not_available),
                     color = Color.White,
                     modifier = modifier.padding(start = 8.dp, top = 8.dp)
                 )
                 Text(
-                    text = newsDataModel.description,
+                    text = newsDataModel.description ?: stringResource(R.string.item_not_available),
                     maxLines = 2,
                     color = Color.White,
                     overflow = TextOverflow.Ellipsis,
@@ -89,22 +92,5 @@ fun TopNewsItem(
                 )
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun TopNewsItemPreview() {
-    TopNewsItem(
-        NewsDataModel(
-            4,
-            R.drawable.husky,
-            author = "Mike Florio",
-            title = "Aaron Rodgers violated COVID protocol by doing maskless indoor press conferences - NBC Sports",
-            description = "Packers quarterback Aaron Rodgers has been conducting in-person press conferences in the Green Bay facility without wearing a mask. Because he was secretly unvaccinated, Rodgers violated the rules.",
-            publishedAt = "2021-11-04T03:21:00Z"
-        )
-    ) {
-
     }
 }
