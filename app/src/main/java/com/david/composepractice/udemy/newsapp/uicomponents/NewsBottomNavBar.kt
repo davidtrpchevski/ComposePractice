@@ -15,7 +15,7 @@ import com.david.composepractice.udemy.newsapp.model.BottomNavigationDestination
 fun NewsAppBottomNavBar(
     navController: NavController, navigationEntriesList: List<BottomNavigationDestination>
 ) {
-    BottomAppBar {
+    BottomAppBar(contentColor = Color.White) {
         val navigationEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navigationEntry?.destination?.route
 
