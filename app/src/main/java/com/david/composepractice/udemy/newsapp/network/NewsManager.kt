@@ -26,6 +26,7 @@ class NewsManager {
 
     val selectedCategory = mutableStateOf<CategoryTabArticleModel?>(null)
     val selectedSource = mutableStateOf<Pair<String, String>?>(null)
+    val searchQuery = mutableStateOf("")
 
     init {
         getArticles(country = "us")
@@ -48,8 +49,8 @@ class NewsManager {
         })
     }
 
-    fun getArticlesBySource(source: String?) {
-        val service = NewsApi.retrofitService.getArticlesBySources(source)
+    fun getArticlesByFiltering(source: String? = null, query: String? = null) {
+        val service = NewsApi.retrofitService.getArticlesBySources(source, query)
         service.enqueue(object : Callback<TopNewsModel> {
             override fun onResponse(call: Call<TopNewsModel>, response: Response<TopNewsModel>) {
                 if (response.isSuccessful) {
@@ -67,5 +68,9 @@ class NewsManager {
 
     fun setSelectedCategory(categoryTabArticleModel: CategoryTabArticleModel) {
         selectedCategory.value = categoryTabArticleModel
+    }
+
+    fun setSearchQuery(query: String) {
+        searchQuery.value = query
     }
 }

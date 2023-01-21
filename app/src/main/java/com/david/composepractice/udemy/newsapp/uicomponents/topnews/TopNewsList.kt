@@ -1,4 +1,4 @@
-package com.david.composepractice.udemy.newsapp.uicomponents
+package com.david.composepractice.udemy.newsapp.uicomponents.topnews
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

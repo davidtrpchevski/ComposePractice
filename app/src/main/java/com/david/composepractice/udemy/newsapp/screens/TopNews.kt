@@ -10,12 +10,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.david.composepractice.udemy.newsapp.model.TopNewsArticleModel
-import com.david.composepractice.udemy.newsapp.uicomponents.TopNewsList
+import com.david.composepractice.udemy.newsapp.network.NewsManager
+import com.david.composepractice.udemy.newsapp.uicomponents.topnews.TopNewsList
+import com.david.composepractice.udemy.newsapp.uicomponents.topnews.TopNewsSearch
 
 @Composable
-fun TopNews(navController: NavController, topNewsArticles: List<TopNewsArticleModel?>?) {
+fun TopNews(
+    navController: NavController,
+    topNewsArticles: List<TopNewsArticleModel?>?,
+    newsManager: NewsManager
+) {
     Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = "Top News", modifier = Modifier.padding(vertical = 12.dp))
+        TopNewsSearch(newsManager)
         TopNewsList(topNewsArticles) {
             navController.navigate("DetailsScreen/${topNewsArticles?.indexOf(it)}")
         }

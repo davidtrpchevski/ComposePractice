@@ -83,7 +83,7 @@ fun NavGraphBuilder.setupBottomNavigation(
     newsManager: NewsManager
 ) {
     composable(BottomNavigationDestination.TopNews.route) {
-        TopNews(navController = navHostController, articles)
+        TopNews(navController = navHostController, articles, newsManager)
     }
     composable(BottomNavigationDestination.Categories.route) {
         newsManager.getArticles(category = newsManager.selectedCategory.value?.categoryName)
