@@ -1,0 +1,1 @@
+For navigation with arguments, we need to set the argument in curly brackets (ex. Details/{key})

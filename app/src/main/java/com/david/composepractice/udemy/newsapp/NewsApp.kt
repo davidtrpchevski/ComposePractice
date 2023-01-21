@@ -2,9 +2,11 @@ package com.david.composepractice.udemy.newsapp
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.david.composepractice.udemy.newsapp.screens.DetailsScreen
 import com.david.composepractice.udemy.newsapp.screens.TopNews
 
@@ -15,8 +17,14 @@ fun NewsApp() {
         composable("TopNews") {
             TopNews(navController = newsNavController)
         }
-        composable("DetailsScreen") {
-            DetailsScreen(navController = newsNavController)
+        composable(
+            "DetailsScreen/{$NEWS_ID_NAV_KEY}", arguments = listOf(navArgument(NEWS_ID_NAV_KEY) {
+                type = NavType.IntType
+            })
+        ) { navEntry ->
+            val newsItemId = navEntry.arguments?.getInt(NEWS_ID_NAV_KEY)
+            val newsItem = MockData.getNewsItemById(newsItemId)
+            DetailsScreen(navController = newsNavController, newsItem)
         }
     }
 }

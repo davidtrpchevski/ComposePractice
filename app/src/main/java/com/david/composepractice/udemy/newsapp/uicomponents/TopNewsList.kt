@@ -1,6 +1,7 @@
 package com.david.composepractice.udemy.newsapp.uicomponents
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,21 +28,26 @@ import com.david.composepractice.udemy.newsapp.MockData
 import com.david.composepractice.udemy.newsapp.model.NewsDataModel
 
 @Composable
-fun TopNewsList() {
+fun TopNewsList(onItemClicked: (NewsDataModel) -> Unit) {
     LazyColumn {
         items(MockData.topNewsList) { item: NewsDataModel ->
-            TopNewsItem(newsDataModel = item)
+            TopNewsItem(newsDataModel = item, onItemClicked = onItemClicked)
         }
     }
 }
 
 @Composable
-fun TopNewsItem(newsDataModel: NewsDataModel, modifier: Modifier = Modifier) {
+fun TopNewsItem(
+    newsDataModel: NewsDataModel,
+    modifier: Modifier = Modifier,
+    onItemClicked: (NewsDataModel) -> Unit
+) {
     Box(
         modifier = modifier
             .height(200.dp)
             .fillMaxWidth()
             .padding(8.dp)
+            .clickable { onItemClicked(newsDataModel) }
     ) {
         Image(
             painter = painterResource(id = newsDataModel.image),
@@ -98,5 +104,7 @@ fun TopNewsItemPreview() {
             description = "Packers quarterback Aaron Rodgers has been conducting in-person press conferences in the Green Bay facility without wearing a mask. Because he was secretly unvaccinated, Rodgers violated the rules.",
             publishedAt = "2021-11-04T03:21:00Z"
         )
-    )
+    ) {
+
+    }
 }

@@ -69,5 +69,5 @@ object MockData {
         )
     )
 
-    fun getNewsItemById(id: Int) = topNewsList.first { it.id == id }
+    fun getNewsItemById(id: Int?) = topNewsList.first { it.id == id }
 }

@@ -17,7 +17,9 @@ import com.david.composepractice.udemy.newsapp.uicomponents.TopNewsList
 fun TopNews(navController: NavController) {
     Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = "Top News", modifier = Modifier.padding(vertical = 12.dp))
-        TopNewsList()
+        TopNewsList {
+            navController.navigate("DetailsScreen/${it.id}")
+        }
         /*
         Button(onClick = { navController.navigate("DetailsScreen") }) {
             Text(text = "Navigate to DetailsScreen")
