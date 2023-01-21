@@ -33,5 +33,5 @@ object NewsApi {
             .client(okHttpInterceptor)
             .build()
 
-    val retrofitService by lazy { retrofit.create(NewsService::class.java) }
+    val retrofitService: NewsService by lazy { retrofit.create(NewsService::class.java) }
 }

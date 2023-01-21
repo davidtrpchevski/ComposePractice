@@ -92,7 +92,6 @@ fun NavGraphBuilder.setupBottomNavigation(
             newsManager.newsResponse.value.topNewsArticleModels,
             newsManager
         ) { categoryTabArticleModel ->
-
             newsManager.setSelectedCategory(categoryTabArticleModel)
         }
     }

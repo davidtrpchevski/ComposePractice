@@ -18,6 +18,12 @@ class NewsManager {
             _newsResponse
         }
 
+    private val _sourcesResponse = mutableStateOf(TopNewsModel())
+    val sourcesResponse: State<TopNewsModel>
+        @Composable get() = remember {
+            _sourcesResponse
+        }
+
     val selectedCategory = mutableStateOf<CategoryTabArticleModel?>(null)
     val selectedSource = mutableStateOf<Pair<String, String>?>(null)
 
@@ -31,7 +37,23 @@ class NewsManager {
             override fun onResponse(call: Call<TopNewsModel>, response: Response<TopNewsModel>) {
                 if (response.isSuccessful) {
                     _newsResponse.value = response.body()!!
-                    Log.d("APIERROR", "${_newsResponse.value}")
+                } else {
+                    Log.d("APIERROR", response.errorBody().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<TopNewsModel>, t: Throwable) {
+                t.printStackTrace()
+            }
+        })
+    }
+
+    fun getArticlesBySource(source: String?) {
+        val service = NewsApi.retrofitService.getArticlesBySources(source)
+        service.enqueue(object : Callback<TopNewsModel> {
+            override fun onResponse(call: Call<TopNewsModel>, response: Response<TopNewsModel>) {
+                if (response.isSuccessful) {
+                    _sourcesResponse.value = response.body()!!
                 } else {
                     Log.d("APIERROR", response.errorBody().toString())
                 }

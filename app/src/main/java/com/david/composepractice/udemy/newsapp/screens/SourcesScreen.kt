@@ -32,7 +32,10 @@ fun SourcesScreen(newsManager: NewsManager) {
             })
         }
     ) {
-        SourcesList(it)
+        SourcesList(
+            topNewsArticleModelList = newsManager.sourcesResponse.value.topNewsArticleModels,
+            paddingValues = it
+        )
     }
 }
 

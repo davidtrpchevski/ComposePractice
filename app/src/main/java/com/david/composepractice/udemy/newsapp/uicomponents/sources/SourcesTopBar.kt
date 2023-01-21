@@ -45,6 +45,7 @@ private fun SourcesDropDownMenu(
             menuItems.forEach { menuItem ->
                 DropdownMenuItem(onClick = {
                     newsManager.selectedSource.value = menuItem
+                    newsManager.getArticlesBySource(newsManager.selectedSource.value?.second)
                     onDismissAction()
                 }) {
                     Text(text = menuItem.first)
