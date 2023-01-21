@@ -1,5 +1,6 @@
 package com.david.composepractice.udemy.newsapp
 
+import android.util.Log
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Scaffold
@@ -13,6 +14,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.david.composepractice.udemy.newsapp.model.BottomNavigationDestination
+import com.david.composepractice.udemy.newsapp.network.NewsManager
 import com.david.composepractice.udemy.newsapp.screens.CategoriesScreen
 import com.david.composepractice.udemy.newsapp.screens.DetailsScreen
 import com.david.composepractice.udemy.newsapp.screens.SourcesScreen
@@ -40,7 +42,14 @@ fun NewsApp() {
 }
 
 @Composable
-fun MainNavigation(navHostController: NavHostController, scrollState: ScrollState) {
+fun MainNavigation(
+    navHostController: NavHostController,
+    scrollState: ScrollState,
+    newsManager: NewsManager = NewsManager()
+) {
+    val articles = newsManager.newsResponse.value.topNewsArticleModels
+    Log.d("DAVIDHERE", articles.toString())
+
     NavHost(navController = navHostController, startDestination = "TopNews") {
         setupBottomNavigation(navHostController)
         composable("TopNews") {
