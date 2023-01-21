@@ -1,6 +1,6 @@
 package com.david.composepractice.udemy.newsapp.model
 
-enum class CategoryArticle(val categoryName: String) {
+enum class CategoryTabArticleModel(val categoryName: String) {
     BUSINESS("business"),
     ENTERTAINMENT("entertainment"),
     GENERAL("general"),

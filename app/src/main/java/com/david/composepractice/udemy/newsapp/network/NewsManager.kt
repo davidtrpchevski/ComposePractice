@@ -5,8 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import com.david.composepractice.BuildConfig
-import com.david.composepractice.udemy.newsapp.model.CategoryArticle
+import com.david.composepractice.udemy.newsapp.model.CategoryTabArticleModel
 import com.david.composepractice.udemy.newsapp.model.TopNewsModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,14 +18,14 @@ class NewsManager {
             _newsResponse
         }
 
-    val selectedCategory = mutableStateOf<CategoryArticle?>(null)
+    val selectedCategory = mutableStateOf<CategoryTabArticleModel?>(null)
 
     init {
-        getArticles()
+        getArticles(country = "us")
     }
 
-    private fun getArticles() {
-        val service = NewsApi.retrofitService.getTopArticles("us", BuildConfig.API_KEY)
+    private fun getArticles(country: String? = null, category: String? = null) {
+        val service = NewsApi.retrofitService.getTopArticles(country, category)
         service.enqueue(object : Callback<TopNewsModel> {
             override fun onResponse(call: Call<TopNewsModel>, response: Response<TopNewsModel>) {
                 if (response.isSuccessful) {
@@ -43,7 +42,7 @@ class NewsManager {
         })
     }
 
-    fun setSelectedCategory(categoryArticle: CategoryArticle) {
-        selectedCategory.value = categoryArticle
+    fun setSelectedCategory(categoryTabArticleModel: CategoryTabArticleModel) {
+        selectedCategory.value = categoryTabArticleModel
     }
 }

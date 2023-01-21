@@ -1,15 +1,15 @@
 package com.david.composepractice.udemy.newsapp.screens
 
 import androidx.compose.runtime.Composable
-import com.david.composepractice.udemy.newsapp.model.CategoryArticle
+import com.david.composepractice.udemy.newsapp.model.CategoryTabArticleModel
 import com.david.composepractice.udemy.newsapp.network.NewsManager
-import com.david.composepractice.udemy.newsapp.uicomponents.CategoryList
+import com.david.composepractice.udemy.newsapp.uicomponents.CategoryTabList
 
 @Composable
 fun CategoriesScreen(
-    categoryList: List<CategoryArticle>,
+    categoryList: List<CategoryTabArticleModel>,
     newsManager: NewsManager,
-    onCategoryClick: (CategoryArticle) -> Unit
+    onCategoryClick: (CategoryTabArticleModel) -> Unit
 ) {
-    CategoryList(categoryList = categoryList, newsManager, onCategoryClick)
+    CategoryTabList(categoryList = categoryList, newsManager, onCategoryClick)
 }
