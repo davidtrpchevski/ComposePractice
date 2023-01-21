@@ -86,8 +86,14 @@ fun NavGraphBuilder.setupBottomNavigation(
         TopNews(navController = navHostController, articles)
     }
     composable(BottomNavigationDestination.Categories.route) {
-        CategoriesScreen(MockData.getAllCategories, newsManager) {
-            newsManager.setSelectedCategory(it)
+        newsManager.getArticles(category = newsManager.selectedCategory.value?.categoryName)
+        CategoriesScreen(
+            MockData.getAllCategories,
+            newsManager.newsResponse.value.topNewsArticleModels,
+            newsManager
+        ) { categoryTabArticleModel ->
+
+            newsManager.setSelectedCategory(categoryTabArticleModel)
         }
     }
     composable(BottomNavigationDestination.Sources.route) {

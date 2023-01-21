@@ -24,7 +24,7 @@ class NewsManager {
         getArticles(country = "us")
     }
 
-    private fun getArticles(country: String? = null, category: String? = null) {
+    fun getArticles(country: String? = null, category: String? = null) {
         val service = NewsApi.retrofitService.getTopArticles(country, category)
         service.enqueue(object : Callback<TopNewsModel> {
             override fun onResponse(call: Call<TopNewsModel>, response: Response<TopNewsModel>) {
