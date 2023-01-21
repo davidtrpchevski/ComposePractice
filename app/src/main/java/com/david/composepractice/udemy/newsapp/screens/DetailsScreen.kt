@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,8 +13,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Details
 import androidx.compose.runtime.Composable
@@ -34,6 +39,41 @@ import com.david.composepractice.udemy.newsapp.model.NewsDataModel
 @Composable
 fun DetailsScreen(
     navController: NavController, newsDataModel: NewsDataModel, scrollState: ScrollState
+) {
+    Scaffold(topBar = {
+        DetailsTopAppBar {
+            navController.popBackStack()
+        }
+    }) { paddingValues ->
+        DetailsContent(navController, newsDataModel, scrollState, paddingValues)
+    }
+}
+
+@Composable
+fun ItemRowInfo(icon: ImageVector, title: String) {
+    Row(modifier = Modifier) {
+        Icon(imageVector = icon, contentDescription = title)
+        Text(text = title)
+    }
+}
+
+@Composable
+fun DetailsTopAppBar(onBackPressed: () -> Unit) {
+    TopAppBar(title = {
+        Text(text = "Details Screen", fontWeight = FontWeight.SemiBold)
+    }, navigationIcon = {
+        IconButton(onClick = onBackPressed) {
+            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "")
+        }
+    })
+}
+
+@Composable
+fun DetailsContent(
+    navController: NavController,
+    newsDataModel: NewsDataModel,
+    scrollState: ScrollState,
+    paddingValues: PaddingValues
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -62,14 +102,6 @@ fun DetailsScreen(
             modifier = Modifier.padding(vertical = 20.dp)
         )
         Text(text = newsDataModel.description)
-    }
-}
-
-@Composable
-fun ItemRowInfo(icon: ImageVector, title: String) {
-    Row(modifier = Modifier) {
-        Icon(imageVector = icon, contentDescription = title)
-        Text(text = title)
     }
 }
 
