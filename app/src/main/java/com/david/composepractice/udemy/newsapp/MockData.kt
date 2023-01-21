@@ -1,6 +1,7 @@
 package com.david.composepractice.udemy.newsapp
 
 import com.david.composepractice.R
+import com.david.composepractice.udemy.newsapp.model.CategoryArticle
 import com.david.composepractice.udemy.newsapp.model.NewsDataModel
 
 object MockData {
@@ -70,4 +71,16 @@ object MockData {
     )
 
     fun getNewsItemById(id: Int?) = topNewsList.first { it.id == id }
+
+    val getAllCategories = listOf(
+        CategoryArticle.BUSINESS,
+        CategoryArticle.GENERAL,
+        CategoryArticle.HEALTH,
+        CategoryArticle.SCIENCE,
+        CategoryArticle.ENTERTAINMENT,
+        CategoryArticle.SPORTS,
+        CategoryArticle.TECHNOLOGY
+    )
+
+    fun getCategoryByName(categoryName: String) = CategoryArticle.valueOf(categoryName)
 }

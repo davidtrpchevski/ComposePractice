@@ -33,7 +33,8 @@ fun NewsApp() {
         BottomNavigationDestination.Categories,
         BottomNavigationDestination.Sources
     )
-    val articles = NewsManager().newsResponse.value.topNewsArticleModels
+    val newsManager = NewsManager()
+    val articles = newsManager.newsResponse.value.topNewsArticleModels
 
     Scaffold(bottomBar = {
         NewsAppBottomNavBar(
@@ -41,7 +42,11 @@ fun NewsApp() {
         )
     }) {
         MainNavigation(
-            navHostController = newsNavController, scrollState = newsAppScrollState, articles, it
+            navHostController = newsNavController,
+            scrollState = newsAppScrollState,
+            articles,
+            newsManager,
+            it
         )
     }
 }
@@ -51,6 +56,7 @@ fun MainNavigation(
     navHostController: NavHostController,
     scrollState: ScrollState,
     articles: List<TopNewsArticleModel?>?,
+    newsManager: NewsManager,
     paddingValues: PaddingValues,
 ) {
     NavHost(
@@ -58,7 +64,7 @@ fun MainNavigation(
         startDestination = BottomNavigationDestination.TopNews.route,
         modifier = Modifier.padding(paddingValues)
     ) {
-        setupBottomNavigation(navHostController, articles)
+        setupBottomNavigation(navHostController, articles, newsManager)
         composable(
             "DetailsScreen/{$NEWS_ID_NAV_KEY}", arguments = listOf(navArgument(NEWS_ID_NAV_KEY) {
                 type = NavType.IntType
@@ -72,13 +78,17 @@ fun MainNavigation(
 }
 
 fun NavGraphBuilder.setupBottomNavigation(
-    navHostController: NavHostController, articles: List<TopNewsArticleModel?>?
+    navHostController: NavHostController,
+    articles: List<TopNewsArticleModel?>?,
+    newsManager: NewsManager
 ) {
     composable(BottomNavigationDestination.TopNews.route) {
         TopNews(navController = navHostController, articles)
     }
     composable(BottomNavigationDestination.Categories.route) {
-        CategoriesScreen()
+        CategoriesScreen(MockData.getAllCategories, newsManager) {
+            newsManager.setSelectedCategory(it)
+        }
     }
     composable(BottomNavigationDestination.Sources.route) {
         SourcesScreen()

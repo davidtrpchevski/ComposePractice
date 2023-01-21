@@ -6,6 +6,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.david.composepractice.BuildConfig
+import com.david.composepractice.udemy.newsapp.model.CategoryArticle
 import com.david.composepractice.udemy.newsapp.model.TopNewsModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,6 +18,8 @@ class NewsManager {
         @Composable get() = remember {
             _newsResponse
         }
+
+    val selectedCategory = mutableStateOf<CategoryArticle?>(null)
 
     init {
         getArticles()
@@ -38,6 +41,9 @@ class NewsManager {
                 t.printStackTrace()
             }
         })
+    }
 
+    fun setSelectedCategory(categoryArticle: CategoryArticle) {
+        selectedCategory.value = categoryArticle
     }
 }
