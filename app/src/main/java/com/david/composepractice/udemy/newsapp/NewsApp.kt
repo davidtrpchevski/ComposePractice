@@ -1,9 +1,12 @@
 package com.david.composepractice.udemy.newsapp
 
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -13,6 +16,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.david.composepractice.udemy.newsapp.model.BottomNavigationDestination
+import com.david.composepractice.udemy.newsapp.model.TopNewsArticleModel
+import com.david.composepractice.udemy.newsapp.network.NewsManager
 import com.david.composepractice.udemy.newsapp.screens.CategoriesScreen
 import com.david.composepractice.udemy.newsapp.screens.DetailsScreen
 import com.david.composepractice.udemy.newsapp.screens.SourcesScreen
@@ -28,45 +33,70 @@ fun NewsApp() {
         BottomNavigationDestination.Categories,
         BottomNavigationDestination.Sources
     )
+    val newsManager = NewsManager()
+    val articles = newsManager.newsResponse.value.topNewsArticleModels
 
     Scaffold(bottomBar = {
         NewsAppBottomNavBar(
             navController = newsNavController, navigationEntriesList = bottomNavigationEntries
         )
     }) {
-        it
-        MainNavigation(navHostController = newsNavController, scrollState = newsAppScrollState)
+        MainNavigation(
+            navHostController = newsNavController,
+            scrollState = newsAppScrollState,
+            articles,
+            newsManager,
+            it
+        )
     }
 }
 
 @Composable
-fun MainNavigation(navHostController: NavHostController, scrollState: ScrollState) {
-    NavHost(navController = navHostController, startDestination = "TopNews") {
-        setupBottomNavigation(navHostController)
-        composable("TopNews") {
-            TopNews(navController = navHostController)
-        }
+fun MainNavigation(
+    navHostController: NavHostController,
+    scrollState: ScrollState,
+    articles: List<TopNewsArticleModel?>?,
+    newsManager: NewsManager,
+    paddingValues: PaddingValues,
+) {
+    NavHost(
+        navController = navHostController,
+        startDestination = BottomNavigationDestination.TopNews.route,
+        modifier = Modifier.padding(paddingValues)
+    ) {
+        setupBottomNavigation(navHostController, articles, newsManager)
         composable(
             "DetailsScreen/{$NEWS_ID_NAV_KEY}", arguments = listOf(navArgument(NEWS_ID_NAV_KEY) {
                 type = NavType.IntType
             })
         ) { navEntry ->
-            val newsItemId = navEntry.arguments?.getInt(NEWS_ID_NAV_KEY)
-            val newsItem = MockData.getNewsItemById(newsItemId)
-            DetailsScreen(navController = navHostController, newsItem, scrollState)
+            val topArticleIndex = navEntry.arguments?.getInt(NEWS_ID_NAV_KEY)
+            val topArticle = topArticleIndex?.let { articles?.get(it) }
+            DetailsScreen(navController = navHostController, topArticle, scrollState)
         }
     }
 }
 
-fun NavGraphBuilder.setupBottomNavigation(navHostController: NavHostController) {
+fun NavGraphBuilder.setupBottomNavigation(
+    navHostController: NavHostController,
+    articles: List<TopNewsArticleModel?>?,
+    newsManager: NewsManager
+) {
     composable(BottomNavigationDestination.TopNews.route) {
-        TopNews(navController = navHostController)
+        TopNews(navController = navHostController, articles, newsManager)
     }
     composable(BottomNavigationDestination.Categories.route) {
-        CategoriesScreen()
+        newsManager.getArticles(category = newsManager.selectedCategory.value?.categoryName)
+        CategoriesScreen(
+            MockData.getAllCategories,
+            newsManager.newsResponse.value.topNewsArticleModels,
+            newsManager
+        ) { categoryTabArticleModel ->
+            newsManager.setSelectedCategory(categoryTabArticleModel)
+        }
     }
     composable(BottomNavigationDestination.Sources.route) {
-        SourcesScreen()
+        SourcesScreen(newsManager)
     }
 }
 
